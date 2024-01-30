@@ -3,9 +3,11 @@
 #include <math.h>
 #include <stdlib.h>
 #include <windows.h>
+#include "conio.h"
 using namespace std;
 const int row=10;
 const int column=6;
+
 /*making a random number */
 int random(){
     srand(clock()+time(NULL)+M_PI);
@@ -69,11 +71,26 @@ int main() {
         }
 
         for(int i=0;i<row;i++){
-            if(i!=row && playground[i][start]!=1){
+            playground[i-1][start]=0;
+            
+            if (_kbhit()) {
+                char c;
+                c = getch();
+                if(c == 'd') {
+                    if(start!=column-1 && playground[i][start+1]==0)
+                        start = start+1;
+                }
+                if (c=='a') {
+                    if(start!=0 && playground[i][start-1]==0)
+                        start = start-1;
+                }
+            }
+
+            
+            Sleep(500);
+            if(i!=row && playground[i+1][start]!=1){
                 playground[i][start]=1;
-                playground[i-1][start]=0;
                 game_board(score,playground);
-                Sleep(50);
             }
             else{
                 playground[i][start]=1;
